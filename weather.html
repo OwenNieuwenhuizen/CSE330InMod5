@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather</title> 
+        <link rel="stylesheet" href="https://classes.engineering.wustl.edu/cse330/content/weather.css">
+    </head>
+    <body>
+        <main>
+            <div class="weather" id="weatherWidget">
+                <div class="weather-loc"></div>
+                <div class="weather-humidity"></div>
+                <div class="weather-temp"></div>
+                <img class="weather-tomorrow" />
+                <img class="weather-dayaftertomorrow" />
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", fetchWeather, false);
+                function fetchWeather() {
+                    var xml = new XMLHttpRequest();
+                    var url = "https://classes.engineering.wustl.edu/cse330/content/weather_json.php";
+                    xml.open("GET",url,true);
+                    xml.onload = function() {
+                        if(xml.status >= 200 && xml.status < 300) {
+                            var data = JSON.parse(xml.responseText);
+                            console.log(data);
+                            var location = data.location;
+                            var city = location.city;
+                            var state = location.state;
+                            var humidity = data.atmosphere.humidity;
+                            var temp = data.current.temp;
+                            console.log(temp);
+                            var tomfor = data.tomorrow.code;
+                            console.log(tomfor);
+                            var datom = data.dayafter.code;
+                            console.log(datom);
+
+                            document.querySelector(".weather-loc").innerHTML = '<strong>'+city+'</strong> '+state;
+                            document.querySelector(".weather-temp").textContent = temp;
+                            document.querySelector(".weather-humidity").textContent = humidity;
+                            document.querySelector(".weather-tomorrow").src = "http://us.yimg.com/i/us/nws/weather/gr/"+tomfor+"ds.png";
+                            document.querySelector(".weather-dayaftertomorrow").src = "http://us.yimg.com/i/us/nws/weather/gr/"+datom+"ds.png";
+                        }
+                    };
+                    xml.send();
+                }    
+            </script>
+        </main>
+    </body>
+</html>

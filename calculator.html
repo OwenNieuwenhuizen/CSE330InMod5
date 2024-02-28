@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculator</title> 
+    </head>
+    <body>
+        <header>
+            <h1>Calculator</h1>
+        </header>
+        <main>
+            <input type="text" id="quantity1" name="quantity1" placeholder="#1"><br>
+            <div class="op">
+                <input type="radio" name="operator" value="+"><label>+</label><br>
+                <input type="radio" name="operator" value="-"><label>-</label><br>
+                <input type="radio" name="operator" value="*"><label>*</label><br>
+                <input type="radio" name="operator" value="/"><label>/</label><br>
+            </div>
+            <input type="text" id="quantity2" name="quantity2" placeholder="#2"><br>
+            <button onclick="calculate()">Calculate</button>
+            <label for="solution">Solution: </label><p id="solution"></p>
+            <script>
+                function calculate() {
+                    var quantity1 = parseFloat(document.getElementById("quantity1").value);
+                    var quantity2 = parseFloat(document.getElementById("quantity2").value);
+                    var operator = document.querySelector('input[name="operator"]:checked');
+                    if(operator) {
+                        operator = operator.value;
+                        var result;
+                        switch(operator) {
+                            case '+':
+                                result = quantity1 + quantity2;
+                                break;
+                            case '-':
+                                result = quantity1 - quantity2;
+                                break;
+                            case '*':
+                                result = quantity1 * quantity2;
+                                break;
+                            case '/':
+                                result = quantity1 / quantity2;
+                                break;
+                            default:
+                                result = "Not an Operator";
+                        }
+                        document.getElementById("solution").innerText = result;
+                    }
+                    else {
+                        document.getElementById("solution").innerText = "Select an Operator";
+                    }
+                }
+            </script>
+            <style>
+                main {
+                    display: flex;
+                    width: 50%;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .op {
+                    display: flex;
+                    align-items: center;
+                    background-color: rgb(7, 109, 109);
+                    color: white;
+                    padding: 3%;
+                    border-radius: 10px;
+                }
+            </style>
+        </main>
+    </body>
+</html>
